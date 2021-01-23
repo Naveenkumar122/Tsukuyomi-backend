@@ -39,6 +39,6 @@ function updateByID(req, res, next) {
   }
   //after authorization calling the update service
   AdLoanService.updateByID(req.body)
-    .then(() => res.status(201).json({ message: "Loan Record Updated" }))
+    .then(() => res.status(201).json({ message: ` Request Updated` }))
     .catch(err => next(err));
 }
