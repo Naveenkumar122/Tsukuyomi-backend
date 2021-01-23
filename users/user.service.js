@@ -8,17 +8,17 @@ const UserAuth = db.UserAuth;
 
 module.exports = {
     authenticate,
-    create
+    create,
+    getAll
 };
 
 async function authenticate({ email, password }) {
     const user = await UserAuth.findOne({ email });
     if (user && bcrypt.compareSync(password, user.password)) {
-        const token = jwt.sign({ sub: user._id,role:user.role }, config.secret, { expiresIn: '7d' });
-        return {
-            ...user.toJSON(),
-            token
-        };
+        const token = jwt.sign({ sub: user.userId,role:user.role }, config.secret, { expiresIn: '7d' });
+        const userWithoutPass = await User.findOne({email});
+        const res = {...userWithoutPass._doc,token}
+        return res;
     }
 }
 
@@ -32,7 +32,8 @@ async function create(Param){
     const user = new User({
         name: Param.name,
         email:Param.email,
-        teamName:Param.teamName
+        teamName:Param.teamName,
+        salary:Param.salary
     });
     //saving the above input in mongodb
     await user.save();
@@ -47,3 +48,8 @@ async function create(Param){
     //saving the user authentication details in the userAuth collection
     await user_auth.save();
 }
+
+//function to get data all employees
+async function getAll(){
+    return await User.find();
+ }

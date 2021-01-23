@@ -4,9 +4,14 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     empID:{type:String,required:true},
     teamName:{type:String,required:true},
-    Attdate: { type: Date, required:true},
-    Entry: { type: Date, required:true},
-    Exit: { type: Date, default:null }
+    updated:{type:Boolean,default:false},
+    Accepted:{type:Boolean,default:false},
+    Attdate: { type: String, required:true},
+    Entry: { type: String, required:true},
+    Exit: { type: String, default:null },
+    empEmail: {type: String,required:true},
+    Entryupdated:{type:Boolean,default:null},
+    Exitupdated:{type:Boolean,default:null}
 },{collection:"attendance"});
 
 
